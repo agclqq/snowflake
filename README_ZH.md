@@ -32,15 +32,28 @@
 * 第四组，长度38-42，按需设置，当前时间戳减固定时间戳的值
 * 第四组，长度不固定，自动计算，当前时刻下的序列增长
 
+## 安装
+```shell
+go get github.com/agclqq/snowflake
+```
 ## 用例
 ```go
-sf, err := New(2, 2, 2, 2, T38)
-if err != nil {
-    t.Error(err)
-    return
+package main
+
+import (
+	"fmt"
+	"github.com/agclqq/snowflake"
+)
+
+func main()  {
+	sf,err:=snowflake.New(2,2,2,2,snowflake.T38)
+	if err!=nil{
+		fmt.Println(err)
+		return
+	}
+	id:=sf.GetId()
+	fmt.Println(id)
 }
-id := sf1.GetId()
-fmt.Println(id)
 ```
 
 ## 最佳实践

@@ -36,15 +36,28 @@ Group by space：
 * The fourth group，The length of the 38-42.Be required.The value of the current timestamp minus the fixed timestamp
 * The fifth group，The length is not fixed.You don't need to fill it out. It's automatic。Sequence growth at the current time
 
+## Installation
+```shell
+go get github.com/agclqq/snowflake
+```
 ## usage
 ```go
-sf, err := New(2, 2, 2, 2, T38)
-if err != nil {
-    t.Error(err)
-    return
+package main
+
+import (
+	"fmt"
+	"github.com/agclqq/snowflake"
+)
+
+func main()  {
+	sf,err:=snowflake.New(2,2,2,2,snowflake.T38)
+	if err!=nil{
+		fmt.Println(err)
+		return
+	}
+	id:=sf.GetId()
+	fmt.Println(id)
 }
-id := sf1.GetId()
-fmt.Println(id)
 ```
 
 ## best practice
