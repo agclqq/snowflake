@@ -61,10 +61,17 @@ func main()  {
 ```
 
 ## best practice
+**Efficiency**
 
 Using the TestSnowFlake_simg_GetId() method in the test case, you can measure the num value per second that you can achieve by adjusting the parameter `New()` and the `num variable` in the program to confirm your desired performance.
 
 
 In this test case, the hardware environment of 'Intel(R) Core(TM) I7-10750H CPU @ 2.60GHz' can produce about 2.4 million serial numbers per second.
+
+**Multiple conflict**
+
+If your terminal information is not controllable, such as deploying in k8s pod, you can use datacenter and machine to use random numbers to resolve conflicts.  When random digits reach a reasonable length, the probability of conflict is also greatly reduced. 
+
+In this test case TestSnowFlake_GetRandomI(),the probability of conflict is about 1 in 900,000
 
 

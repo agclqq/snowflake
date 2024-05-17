@@ -20,7 +20,7 @@ const (
 
 var lastTime int64
 var sequence int64
-var mx sync.Mutex  //To solve multi-instance concurrency
+var mx sync.Mutex               //To solve multi-instance concurrency
 const startTime = 1630425600000 // 2021-09-01 00:00:00.000
 
 type SnowFlake struct {
@@ -41,7 +41,7 @@ func New(dataCenter, dataCenterBit, machine, machineBit int64, tb timeBit) (*Sno
 	if machine > -1^(-1<<machineBit) {
 		return nil, errors.New("machine overlong")
 	}
-	if getNowMil()<startTime{
+	if getNowMil() < startTime {
 		return nil, errors.New("the startTime must be less than now")
 	}
 	return &SnowFlake{
@@ -52,7 +52,6 @@ func New(dataCenter, dataCenterBit, machine, machineBit int64, tb timeBit) (*Sno
 		tb:            tb,
 	}, nil
 }
-
 
 func (sf *SnowFlake) GetId() int64 {
 	dcLeftMove := idBit - sf.dataCenterBit
@@ -69,7 +68,7 @@ func (sf *SnowFlake) GetId() int64 {
 				lastTime = now
 			}
 			if sequence > -1^(-1<<sequenceBit) {
-				continue   // If the sequence value increases to the maximum value, wait for the next moment
+				continue // If the sequence value increases to the maximum value, wait for the next moment
 			}
 			id = sf.dataCenter<<dcLeftMove | sf.machine<<mcLeftMove | (now-startTime)<<tnLeftMove | sequence
 			sequence++
@@ -82,6 +81,7 @@ func (sf *SnowFlake) GetId() int64 {
 	mx.Unlock()
 	return id
 }
+
 func getNowMil() int64 {
 	return time.Now().UnixNano() / 1e6
 }
